@@ -1,0 +1,53 @@
+### Health
+GET http://localhost:8080/api/health
+
+
+### Test /api/compare endpoint with valid data
+POST http://localhost:8080/api/compare
+Content-Type: application/json
+
+{
+    "query_url": "https://fastly.picsum.photos/id/1038/2596/2401.jpg?hmac=qxWSYtrl69a8TOwhovwxNZw1Q8hJw-I9BrQfVa4yd1s",
+    "target_urls": [
+        "https://fastly.picsum.photos/id/1038/2596/2401.jpg?hmac=qxWSYtrl69a8TOwhovwxNZw1Q8hJw-I9BrQfVa4yd1s","https://fastly.picsum.photos/id/1032/2634/3154.jpg?hmac=DHNzNEb_9AS9nTkY7fihDEx-kUzIZazu6-BS3UF6J-E","https://fastly.picsum.photos/id/863/2516/2493.jpg?hmac=zQN07ilxEp5MSFqxDrkGeeGP-STDXKPmReWJilrAaGA","https://fastly.picsum.photos/id/941/2936/2554.jpg?hmac=L5bshnk1tWO9gJmrV17Z0KpWEzPlvBWlrUdPBNlJ_Tk","https://fastly.picsum.photos/id/36/3028/2274.jpg?hmac=2OiZjuJg6cgGVeitNGjSqOl-QmG7Jo_ARkaBA7uh1xc","https://fastly.picsum.photos/id/299/2749/2132.jpg?hmac=SNoFI1PZSEO5p_jQZuzEE9iSTzW5_yXLYUhmEQj67po","https://fastly.picsum.photos/id/534/2227/3444.jpg?hmac=KbnrcP_F8YZVEIXqznWQC6D-a4K7SnliMa87_i8YQpE","https://fastly.picsum.photos/id/560/2653/3653.jpg?hmac=5kHHHLhjJI7qPl4d2E2JtqKpRhk2wGT3XBZVl6Oz3e0","https://fastly.picsum.photos/id/314/1502/2795.jpg?hmac=tz-q2p0R_HReX0LNx5TmOweVD7M4exkwEQomcoNagOc","https://fastly.picsum.photos/id/925/2688/2205.jpg?hmac=Z9K6fPqRZw88XDHJM4Yg7DYFoIEBvomGWPRIZDnLlks","https://fastly.picsum.photos/id/360/1943/3899.jpg?hmac=NkDIGXiwgemZ1kyb-JOgXWUH_0v4O_0_iUtqz2RbcL0","https://fastly.picsum.photos/id/166/3775/805.jpg?hmac=EVk_ZLxVw5mRdQLG7vB5z5PlKQ9xwj-oh1w5Oj1D0HQ","https://fastly.picsum.photos/id/628/2341/2143.jpg?hmac=Ms2nqqkhgIw2yFQgvUuAsAS-Ls4H6jF5XPMNXk1KdLY","https://fastly.picsum.photos/id/453/1635/2529.jpg?hmac=oTSio2RsU17ASHHUCM7T99vEdqF08oOThKqADbfFypg","https://fastly.picsum.photos/id/965/1607/2153.jpg?hmac=jGupMdKolIRLcirh5olKwiqw1FyKcHkUo1XHrD-x6tw","https://fastly.picsum.photos/id/358/2377/661.jpg?hmac=EOSgLkqJ6oaF7a3Y3pZ9MKGwZYcYG58Tczz3lEwGqWA","https://fastly.picsum.photos/id/450/3451/1987.jpg?hmac=aNEBAbwECwRdc5I2FO9frAMlN0wE8tBTWcOe80VfwMo","https://fastly.picsum.photos/id/223/1077/2975.jpg?hmac=Xr0RL71OFoSFgb8Ikh4mY4-7P-xMh5VAwQ9T5qly1iQ","https://fastly.picsum.photos/id/523/1960/1554.jpg?hmac=biAaBn_Zvf3AXxnS8lCaFwwsR5Oj9fbN0f815dpj2gU","https://fastly.picsum.photos/id/901/2992/1286.jpg?hmac=GaXrYjFFVEPqsM1Kp16VVjHIYjxMfaN2dGg7MMghTT8","https://fastly.picsum.photos/id/658/2920/1125.jpg?hmac=kpLktCU_d6YR11b39eI_eHGZmkMzUOdGoUo2cZ7VOVc","https://fastly.picsum.photos/id/280/2430/861.jpg?hmac=ZntAc1sOnJnA1LT5wxVeCmQz2qmwgFLdh0kuu7OhFL4","https://fastly.picsum.photos/id/726/2000/1686.jpg?hmac=OuGbSbZq8WnS01RzY_-vkKSZvwzL3HP4NY4_alFfQHs","https://fastly.picsum.photos/id/1045/989/2144.jpg?hmac=Sn-qEoZOS_uJ_eAMP0wO96BNE0L7qYJrm8Z58wocKsw","https://fastly.picsum.photos/id/339/1735/2726.jpg?hmac=WzBUVB_uTBqjeg2LScy69W29s5Mee8IJ_FbBnw6pCMY","https://fastly.picsum.photos/id/675/2689/616.jpg?hmac=mlfRu8gOF22kHtly6-7aKove6p_r4rRxwyXz6mNTjAc","https://fastly.picsum.photos/id/37/1753/3980.jpg?hmac=6-4wZfWPby5lXUUKvfQgc7XnrH6Ds_PQ5Y0KXaLedTU","https://fastly.picsum.photos/id/891/1380/2703.jpg?hmac=GoOVDfmP-rrx0pFCazzsCfbls4wyJZJu0rxkHJkmCs4","https://fastly.picsum.photos/id/401/2727/3486.jpg?hmac=Zyk1usYaRQOIUqH3j9WdtM48W3fhKlsiwWN7e0yIifs","https://fastly.picsum.photos/id/238/2528/2146.jpg?hmac=tkWFdb1dTY4cQpw1bcXhYxHyO2TX_ux9jHMbVhWP1rA","https://fastly.picsum.photos/id/107/3047/1637.jpg?hmac=bnBYRH-9BpF2nxoseyDvwbg1N9SV-iSeR6P7_4eZIIQ","https://fastly.picsum.photos/id/271/3670/1991.jpg?hmac=f_NG3T1xy-Eeh3aWASdhmtjUit9wKycKW4KPN9Tmv9E","https://fastly.picsum.photos/id/1049/3338/889.jpg?hmac=OPPGVlzQxj39Qmm5rk-K1274IzhqH_LkO3EXBwipA8Q","https://fastly.picsum.photos/id/571/2141/2800.jpg?hmac=vrndQJjI9-NtQ7SrH6QRq4jIf5p5AJ8mZMYhJBE86Fo","https://fastly.picsum.photos/id/42/1091/3112.jpg?hmac=H0Asa6l6hhTxQDUUPputUA8gWYEDw6EToD2KxW2vefI","https://fastly.picsum.photos/id/939/2349/3916.jpg?hmac=gh8huanv2Sv24-ByruaCoh4GrynyqVI8K9y-AHrijDw","https://fastly.picsum.photos/id/862/3033/765.jpg?hmac=ROauRmncni_u0_-EKhBA_BGdB1ejnWMcIoNtiKtKJiw","https://fastly.picsum.photos/id/1060/3968/976.jpg?hmac=QQ98LUPyWfNVG2ttnR4nawySTgLJ_NLh3rHPne7HKZc","https://fastly.picsum.photos/id/866/1040/1368.jpg?hmac=DqtYRvZHPO0nQDsBbZoNq0tIFLW00o0Npf7DyQSze3g","https://fastly.picsum.photos/id/678/2657/1895.jpg?hmac=m4x25-QT_-Bj7Y2hyNEAqxdXN9hhP-hSq-XRrBg_hsw","https://fastly.picsum.photos/id/7/1244/1284.jpg?hmac=yvTkoK9kuH6tYwIn8BSpR2PTLvQTRMy72glj-pXniJw","https://fastly.picsum.photos/id/760/1619/1244.jpg?hmac=n8hOzPa_qDPUd4xdVtO36wXo4biy9wkrdEs9dWURt30","https://fastly.picsum.photos/id/369/2882/1395.jpg?hmac=LExKLtXAfR_2l0a9QsfLlL4UYGgJxAusPfJoRWIFei8","https://fastly.picsum.photos/id/544/2829/1339.jpg?hmac=gl0eMu-VpUEIT8gD2nKQK9OtBTRn9osZWZiLiuY2KCI","https://fastly.picsum.photos/id/8/1950/3132.jpg?hmac=ofVWHkrGs7p4Lcq4fMI4gCwDunOGzsqgEhZw0znf7BM","https://fastly.picsum.photos/id/508/2940/2145.jpg?hmac=rSsboBYvtYtkANz7mKGMleSRLWzxTPfH_3XYXeX7dP4","https://fastly.picsum.photos/id/666/1772/3739.jpg?hmac=yT70uNmb9iv--3-nkXF8xjXwmbo--vT59bdFp-uF4pw","https://fastly.picsum.photos/id/527/3301/2066.jpg?hmac=SiBSYdd0oQwJNwYUHB4_VlYccZG7bTrPFkMtD3gpFtc","https://fastly.picsum.photos/id/53/1595/2824.jpg?hmac=yUWeiwV7YGl88Shn8V0BVr-vQSkTJ1yGwoYr5GoXYBc","https://fastly.picsum.photos/id/273/3954/1526.jpg?hmac=JSPqA7y5-7d-0CM-aTk_lNqIHofHxLIjOfvKxLxb4Zw","https://fastly.picsum.photos/id/868/1329/3344.jpg?hmac=saoXhBMKVr4HqGjLkO19AE5xQTkpd6LhwlOs1O_yQd8","https://fastly.picsum.photos/id/835/2710/1801.jpg?hmac=V_9YaQEsbZfSjbuXDdiawGjlt8x4R38VqdUlQXFr6IE","https://fastly.picsum.photos/id/652/3175/2653.jpg?hmac=6As5NHQme1sFB8_UlDotT7VwWcTzWBkv3xZVtkDppn4","https://fastly.picsum.photos/id/35/2604/810.jpg?hmac=8-aA6xAkRr5GEPywom9c7OYJwBqXjhpW9YwPaAbVjn8","https://fastly.picsum.photos/id/657/2275/2817.jpg?hmac=z_dFjfqDuEDYl6vO-WNVo5byLsro0lqz156BY8vwZcY","https://fastly.picsum.photos/id/194/1696/808.jpg?hmac=oC4IJNvE67vUnYAVbcIr5ka-VyS66eoHXK0LNsuiQFU","https://fastly.picsum.photos/id/950/2385/1832.jpg?hmac=X7NmNt52P7i3ZlI1TuXt0o6fj1RvR0Pdbj8fUNFsTaU","https://fastly.picsum.photos/id/39/2336/2323.jpg?hmac=F5HNMkT4nn01j3UnSt5WfcxH0F8Yx5ju6X6KqFBtMEg","https://fastly.picsum.photos/id/548/2827/2353.jpg?hmac=tQo-PdSj1JCQ2KQcruDHtLbtVwK4q6-6hAsRv3LRzyc","https://fastly.picsum.photos/id/957/721/2458.jpg?hmac=3D1ZySZyYjtQJNitX0dU8eyge0UoFFu-4XGWQYooJAU","https://fastly.picsum.photos/id/499/3409/1106.jpg?hmac=8nNz1U4gvCb2VrQ1p6vMQAU9Rnr8aL7CmHdH_4jvhdY","https://fastly.picsum.photos/id/779/812/1532.jpg?hmac=RXCHgeVEEpVxqRF8tiOCuzFdmIoELjRJA5rCU5OpxMw","https://fastly.picsum.photos/id/79/3125/780.jpg?hmac=RLG-wJvUhuJu1qZPme-HXZSkl4def9er8PfZfoFnqdI","https://fastly.picsum.photos/id/799/1388/2556.jpg?hmac=W3kpakZdIP1GKJkbndjLBlVwS5MgthXVCy0cmEprkj4","https://fastly.picsum.photos/id/892/1755/2815.jpg?hmac=EqVTKrpBCfqoWkj2tZd7UymQuZ0DDfwbilk4OyJrzyo","https://fastly.picsum.photos/id/162/3382/1839.jpg?hmac=1uTFi99FzD3aVzeB6H8LC7wPivH1LbtqnI1jFkrBW5k","https://fastly.picsum.photos/id/164/1393/1830.jpg?hmac=ODxP5C7v8atMFs3ZAA0iPE56C5y6lDcotFKMMuq-6Bw","https://fastly.picsum.photos/id/393/2089/1876.jpg?hmac=zlxFBnTj-ryhcuLZWbObdOPmNAogCZ4r_keMzHLPag4","https://fastly.picsum.photos/id/766/1944/1816.jpg?hmac=gKmaWmqSz4POFMX6Kmz7QzuG-01z98CKVRwMfpMoHqQ","https://fastly.picsum.photos/id/785/1754/2071.jpg?hmac=4KZnmGH3QoVh5IBJHA2swzXq5PkWNKjMDxEhUHzaj_8","https://fastly.picsum.photos/id/943/2562/1675.jpg?hmac=1N_tov2Uz2w_nIcbAPOf5Goi2ddlBgbnMqfK2rZTCnM","https://fastly.picsum.photos/id/942/2510/1717.jpg?hmac=H6BPvzZb5YnwBw6L7KgulNW3QZ-6pFk4N9T-GvudbSE","https://fastly.picsum.photos/id/464/1633/1774.jpg?hmac=c181wHy82gFHWkDb7omYaohyHAUaZJNF0-DRvBD8KOY","https://fastly.picsum.photos/id/976/1014/3801.jpg?hmac=muPtPmn7gMZDGBGwa7N1FZq6Y7umEAHy3dlPG7DTGNw","https://fastly.picsum.photos/id/493/3659/1782.jpg?hmac=2cpl2EiQq19_UaXqGCJhQ8A85-3J3z_HZ9ImwHlT0mg","https://fastly.picsum.photos/id/565/600/2676.jpg?hmac=PbhrU7oWQQoSnn_cYoCV-_LdoJuziIzI89oD7eI_uAA","https://fastly.picsum.photos/id/351/648/1485.jpg?hmac=NKzyLY2wG42z_m2mPgsUYVtcO0102M88nKwiZNoWet8","https://fastly.picsum.photos/id/992/3677/1511.jpg?hmac=uTYnnbbgKclWqhNTE7hCm7gtQxv4lM_x-UiujZt1Sa0","https://fastly.picsum.photos/id/156/2472/2525.jpg?hmac=0dyHOgAPvveMY7-I2q4K_aBe6kWboH85aZDvCNXU0ZE","https://fastly.picsum.photos/id/145/1456/2115.jpg?hmac=iKA51b-ynuWqAGttUTi8tzfAWRZuJl4Si9aErx_OAKg"
+          ],
+    "threshold": 50
+}
+
+### Test /api/compare endpoint with no data
+POST http://localhost:8080/api/compare
+Content-Type: application/json
+
+{}
+
+### Test /api/compare endpoint with missing query_url
+POST http://localhost:8080/api/compare
+Content-Type: application/json
+
+{
+    "target_urls": [
+        "http://example.com/image1.jpg",
+        "http://example.com/image2.jpg"
+    ]
+}
+
+### Test /api/compare endpoint with missing target_urls
+POST http://localhost:8080/api/compare
+Content-Type: application/json
+
+{
+    "query_url": "http://example.com/query.jpg"
+}
+
+### Test /api/compare endpoint with invalid threshold
+POST http://localhost:8080/api/compare
+Content-Type: application/json
+
+{
+    "query_url": "http://example.com/query.jpg",
+    "target_urls": [
+        "http://example.com/image1.jpg",
+        "http://example.com/image2.jpg"
+    ],
+    "threshold": 150
+}
