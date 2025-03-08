@@ -1,38 +1,30 @@
-import os
 import logging
-from flask import Flask
-from flask_swagger_ui import get_swaggerui_blueprint
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Create Flask app
-app = Flask(__name__)
-app.secret_key = os.environ.get("SESSION_SECRET", "dev_key")
-
-# Swagger configuration
-SWAGGER_URL = '/docs'  # Changed from /api/docs to avoid conflicts
-API_URL = '/api/swagger.json'
-
-swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={
-        'app_name': "Image Similarity Search API"
-    }
+# Create FastAPI app
+app = FastAPI(
+    title="Image Similarity Search API",
+    description="API for finding similar images using OpenCV",
+    version="1.0.0"
 )
 
-# Register blueprints
-logger.debug("Registering Swagger UI blueprint")
-app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Import routes after app initialization
-logger.debug("Importing API blueprint")
+# Import and include API routes
+logger.debug("Importing API routes")
+from api import router
+app.include_router(router, prefix="/api")
 
-from api import bp as api_bp
-logger.debug("Registering API blueprint with prefix /api")
-app.register_blueprint(api_bp, url_prefix='/api')
-
-logger.debug("All blueprints registered")
-logger.debug("Registered routes: %s", [str(rule) for rule in app.url_map.iter_rules()])
+logger.debug("FastAPI app initialized with all routes")

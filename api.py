@@ -1,175 +1,80 @@
-from flask import Blueprint, jsonify, request
+import logging
+from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field, field_validator
+from typing import List, Optional
 from image_processor import ImageProcessor
 # from image_processor_update import OptimizedImageProcessor
-import logging
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Create blueprint
-bp = Blueprint('api', __name__)
-logger.debug("API Blueprint created")
+# Create router
+router = APIRouter()
 
 # Initialize image processor
 image_processor = ImageProcessor()
 # image_processor = OptimizedImageProcessor()
-@bp.route('/compare', methods=['POST'])
-def compare_images():
+
+# Define request and response models
+class CompareRequest(BaseModel):
+    query_url: str = Field(..., description="URL of the query image")
+    target_urls: List[str] = Field(..., description="List of target image URLs")
+    threshold: float = Field(50, description="Similarity threshold (0-100)")
+
+    @field_validator('threshold')
+    def threshold_must_be_valid(cls, v):
+        if v < 0 or v > 100:
+            raise ValueError('Threshold must be between 0 and 100')
+        return v
+
+class SimilarImage(BaseModel):
+    url: str
+    similarity_score: float
+
+class CompareResponse(BaseModel):
+    query_url: str
+    similar_images: List[SimilarImage]
+    failed_urls: Optional[List[str]] = None
+
+@router.post("/compare", response_model=CompareResponse)
+async def compare_images(request: CompareRequest):
     """
     Compare query image with target images and return similar ones
     """
-    logger.debug("Received request to /compare endpoint")
+    logger.debug("Received request to /api/compare endpoint")
     try:
-        data = request.get_json()
+        threshold = int(request.threshold)  # Convert to int for type consistency
+        
+        result = image_processor.find_similar_images(
+            request.query_url,
+            request.target_urls,
+            threshold
+        )
 
-        if not data:
-            return jsonify({'error': 'No JSON data provided'}), 400
+        response = CompareResponse(
+            query_url=request.query_url,
+            similar_images=[SimilarImage(url=item['url'], similarity_score=item['similarity_score']) 
+                           for item in result['similar_images']],
+            failed_urls=result.get('failed_urls')
+        )
+        
+        return response
 
-        query_url = data.get('query_url')
-        target_urls = data.get('target_urls', [])
-        threshold = int(float(data.get('threshold', 50)))  # Convert to int for type consistency
-
-        if not query_url:
-            return jsonify({'error': 'Query URL is required'}), 400
-
-        if not target_urls:
-            return jsonify({'error': 'Target URLs are required'}), 400
-
-        if not isinstance(target_urls, list):
-            return jsonify({'error': 'Target URLs must be a list'}), 400
-
-        if threshold < 0 or threshold > 100:
-            return jsonify({'error': 'Threshold must be between 0 and 100'}), 400
-
-        try:
-            result = image_processor.find_similar_images(
-                query_url,
-                target_urls,
-                threshold
-            )
-
-            response = {
-                'query_url': query_url,
-                'similar_images': result['similar_images']
-            }
-
-            # Only include failed_urls in response if there were any failures
-            if result.get('failed_urls'):
-                response['failed_urls'] = result['failed_urls']
-
-            return jsonify(response)
-
-        except ValueError as e:
-            return jsonify({'error': str(e)}), 400
-
+    except ValueError as e:
+        logger.error(f"Value error: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
-        return jsonify({'error': 'Internal server error occurred'}), 500
+        raise HTTPException(status_code=500, detail="Internal server error occurred")
 
-@bp.route('/health', methods=['GET'])
-def health_check():
+@router.get("/health")
+async def health_check():
     """Health check endpoint"""
-    logger.debug("Received request to /health endpoint")
-    return jsonify({'status': 'healthy'})
+    logger.debug("Received request to /api/health endpoint")
+    return {"status": "healthy"}
 
-@bp.route('/swagger.json', methods=['GET'])
-def swagger_spec():
-    """OpenAPI specification endpoint"""
-    logger.debug("Received request to /swagger.json endpoint")
-    return jsonify({
-        "openapi": "3.0.0",
-        "info": {
-            "title": "Image Similarity Search API",
-            "version": "1.0.0",
-            "description": "API for finding similar images using OpenCV"
-        },
-        "paths": {
-            "/api/compare": {  # Include /api prefix in paths
-                "post": {
-                    "summary": "Compare images and find similar ones",
-                    "requestBody": {
-                        "required": True,
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "query_url": {
-                                            "type": "string",
-                                            "description": "URL of the query image"
-                                        },
-                                        "target_urls": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "description": "List of target image URLs"
-                                        },
-                                        "threshold": {
-                                            "type": "number",
-                                            "description": "Similarity threshold (0-100)"
-                                        }
-                                    },
-                                    "required": ["query_url", "target_urls"]
-                                }
-                            }
-                        }
-                    },
-                    "responses": {
-                        "200": {
-                            "description": "Successful response",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "object",
-                                        "properties": {
-                                            "query_url": {
-                                                "type": "string"
-                                            },
-                                            "similar_images": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "url": {
-                                                            "type": "string"
-                                                        },
-                                                        "similarity_score": {
-                                                            "type": "number"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "/api/health": {  # Include /api prefix in paths
-                "get": {
-                    "summary": "Health check endpoint",
-                    "responses": {
-                        "200": {
-                            "description": "Successful response",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "object",
-                                        "properties": {
-                                            "status": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    })
+# Error handling middleware can be registered at the app level in app.py if needed
+
+# In FastAPI, we don't need to explicitly define the swagger.json endpoint
+# as it's automatically generated and available at /openapi.json
